@@ -1,0 +1,110 @@
+<Slider>
+    id: slider
+    min: 0
+    max: 180
+    step: 1
+    orientation: 'horizontal'
+
+<Grid>
+
+
+    GridLayout:
+        cols:1
+        rows:6
+        size: root.width , root.height
+
+        Label:
+            text: "Blind"
+
+
+        GridLayout:
+            cols:4
+            rows:1
+            
+            GridLayout:
+                cols:1
+                rows:2
+
+                Label:
+                    text: "train model"
+                CheckBox:
+
+
+            GridLayout:
+                cols:1
+                rows:2
+
+                Label:
+                    text: "use model"
+                CheckBox:
+
+            Button:
+                text: 'close'
+
+            Button:
+                text: 'open'
+
+        Label:
+            text: "Lamp"
+            
+
+        GridLayout:
+            cols:4
+            rows:1
+            
+            GridLayout:
+                cols:1
+                rows:2
+
+                Label:
+                    text: "train model"
+                CheckBox:
+
+
+            GridLayout:
+                cols:1
+                rows:2
+
+                Label:
+                    text: "use model"
+                CheckBox:
+
+            Button:
+                text: 'turn on'
+                on_press: app.btn_lamp_on()
+
+            Button:
+                text: 'turn off'
+                on_press: app.btn_lamp_off()
+
+
+        Label:
+            text: "Desktop lamp"
+
+        GridLayout:
+            cols:4
+            rows:1
+            
+            GridLayout:
+                cols:1
+                rows:2
+
+                Label:
+                    text: "train model"
+                CheckBox:
+
+
+            GridLayout:
+                cols:1
+                rows:2
+
+                Label:
+                    text: "use model"
+                CheckBox:
+
+            Button:
+                text: 'turn on'
+
+            Button:
+                text: 'turn off'
+        
