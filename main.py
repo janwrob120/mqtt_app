@@ -21,7 +21,6 @@ class  ControlPanel(App):
 
     client = mqtt.Client()
     broker = "192.168.1.110"
-    #broker = "mqtt.eclipse.org"
     port = 1885
     sub_topics = [("data/room_Jann",0)  ,  ("data/external_sensors",0)]
     #sub_topics = "data/room_Jan"
@@ -54,11 +53,25 @@ class  ControlPanel(App):
         on_start()
 
 
-    def btn_lamp_on(self,*args):
+
+#sending functions
+    def btn_lamp_on(self):
         self.client.publish("control/socket", payload="1")
 
-    def btn_lamp_off(self,*args):
+    def btn_lamp_off(self):
         self.client.publish("control/socket", payload="0")
+
+    def btn_blind_close(self):
+        self.client.publish("control/room_Jan/device_blinds", payload="0")
+
+    def btn_blind_open(self):
+        self.client.publish("control/room_Jan/device_blinds", payload="1") 
+
+    def btn_desktopLamp_on(self):
+        self.client.publish("control/room_Jan/device_lamp", payload="1") 
+
+    def btn_desktopLamp_off(self):
+        self.client.publish("control/room_Jan/device_lamp", payload="0") 
 
 
 if __name__=="__main__":
