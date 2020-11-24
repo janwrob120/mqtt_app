@@ -1,8 +1,12 @@
 import kivy
 from kivy.app import App
 from kivy.uix.widget import Widget
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
+from kivy.config import Config
 
+#import socket
 import paho.mqtt.client as mqtt
 import time
 
@@ -10,8 +14,19 @@ import time
 
 class Grid(Widget):
 
+    # popup = Popup(title='Connection error',content=Label(text=''),
+    # size_hint=(None, None), size=(300, 300))
+
     button_id = ObjectProperty(None)
+
+    # def popup_connection_error(self):
+    #     self.popup.open()
     
+    # def __init__(self,Err):
+    #     print("initilaaaaaal")
+    #     #if(Err!="dssd"):
+    #         #self.popup.open()
+
     def press(self):
         exit()
 
@@ -19,18 +34,20 @@ class Grid(Widget):
     
 class  ControlPanel(App):
 
+    popup = Popup(title='Connection error',content=Label(text=''),
+    size_hint=(None, None), size=(300, 300))
+    
     client = mqtt.Client()
-    broker = "192.168.1.110"
+    broker = "192.168.1.111"
     port = 1885
     sub_topics = [("data/room_Jann",0)  ,  ("data/external_sensors",0)]
-    #sub_topics = "data/room_Jan"
+
 
 
     def on_connect(self,client, userdata, flags, rc):
-        print("Connected with result code "+str(rc))
-        # Subscribing in on_connect() means that if we lose the connection and
-        # reconnect then subscriptions will be renewed.
+        print("--------------------  Connected with result code "+str(rc))
         self.client.subscribe(self.sub_topics)
+
 
     def on_message(self,client, userdata, msg):
         print(msg.topic+" "+str(msg.payload))
@@ -39,8 +56,15 @@ class  ControlPanel(App):
     def on_start(self, **kwargs):
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
-        self.client.connect(self.broker,self.port,60)
-        self.client.loop_start()
+        try:
+            self.client.connect(self.broker,self.port,60)
+            self.client.loop_start()
+            # rc = self.client._loop_rc_handle()
+            # print("rc ----------------------  ",  rc)
+        except Exception as e:
+            print("timeout", e)
+            self.popup.open()
+
 
     def build(self):
         return Grid()
@@ -75,4 +99,6 @@ class  ControlPanel(App):
 
 
 if __name__=="__main__":
+    # Config.set('graphics', 'width', '500')
+    # Config.set('graphics', 'height', '800')
     ControlPanel().run()
