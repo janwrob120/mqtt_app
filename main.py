@@ -13,19 +13,7 @@ import time
 
 
 class Grid(Widget):
-
-    # popup = Popup(title='Connection error',content=Label(text=''),
-    # size_hint=(None, None), size=(300, 300))
-
     button_id = ObjectProperty(None)
-
-    # def popup_connection_error(self):
-    #     self.popup.open()
-    
-    # def __init__(self,Err):
-    #     print("initilaaaaaal")
-    #     #if(Err!="dssd"):
-    #         #self.popup.open()
 
     def press(self):
         exit()
@@ -34,11 +22,11 @@ class Grid(Widget):
     
 class  ControlPanel(App):
 
-    popup = Popup(title='Connection error',content=Label(text=''),
-    size_hint=(None, None), size=(300, 300))
+    popup = Popup(title='Connection error',content=Label(text='The application can not reach the server.\n Please check if you are connected  to the proper network \n and restart the application.'),
+    size_hint=(None, None), size=(300, 300), auto_dismiss=False)
     
     client = mqtt.Client()
-    broker = "192.168.1.111"
+    broker = "192.168.1.110"
     port = 1885
     sub_topics = [("data/room_Jann",0)  ,  ("data/external_sensors",0)]
 
@@ -59,8 +47,6 @@ class  ControlPanel(App):
         try:
             self.client.connect(self.broker,self.port,60)
             self.client.loop_start()
-            # rc = self.client._loop_rc_handle()
-            # print("rc ----------------------  ",  rc)
         except Exception as e:
             print("timeout", e)
             self.popup.open()
@@ -69,7 +55,6 @@ class  ControlPanel(App):
     def build(self):
         return Grid()
     
-
     def on_pause(self):
         self.client.disconnect()
 
@@ -99,6 +84,6 @@ class  ControlPanel(App):
 
 
 if __name__=="__main__":
-    # Config.set('graphics', 'width', '500')
-    # Config.set('graphics', 'height', '800')
+    Config.set('graphics', 'width', '500')
+    Config.set('graphics', 'height', '800')
     ControlPanel().run()
