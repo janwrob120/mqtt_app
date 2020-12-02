@@ -1,5 +1,12 @@
 <Grid>
 
+    checkbox_train_blind:train_blind
+    checkbox_use_blind:use_blind
+
+    checkbox_train_lamp:train_lamp
+    checkbox_use_lamp:use_lamp
+
+    
 
     GridLayout:
         cols:1
@@ -21,6 +28,8 @@
                 Label:
                     text: "train model"
                 CheckBox:
+                    id:train_blind
+                    on_press: app.chck_blind()
 
 
             GridLayout:
@@ -30,6 +39,8 @@
                 Label:
                     text: "use model"
                 CheckBox:
+                    id:use_blind
+                    on_press: app.chck_blind()
 
             Button:
                 text: 'close'
@@ -54,6 +65,8 @@
                 Label:
                     text: "train model"
                 CheckBox:
+                    id: train_lamp
+                    on_press: app.chck_lamp()
 
 
             GridLayout:
@@ -63,7 +76,8 @@
                 Label:
                     text: "use model"
                 CheckBox:
-
+                    id: use_lamp
+                    on_press: app.chck_lamp()
             Button:
                 text: 'turn on'
                 on_press: app.btn_lamp_on()
